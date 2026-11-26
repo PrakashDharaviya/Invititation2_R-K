@@ -1,0 +1,1 @@
+Manually Running Server : node .\node_modules\vite\bin\vite.js

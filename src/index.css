@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: auto;
+    background-color: #fff4ea;
+  }
+
+  body {
+    color: #5f250f;
+    background-color: #fff4ea;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Keyframes matching rammandir.framer.website animations */
+@keyframes bellPendulum {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(6deg);
+  }
+  75% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes bellPendulumStrong {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(13deg);
+  }
+  75% {
+    transform: rotate(-13deg);
+  }
+}
+
+@keyframes flagFlutter {
+  0%, 100% {
+    transform: skewY(0deg) scaleX(1);
+  }
+  50% {
+    transform: skewY(-5deg) scaleX(0.92);
+  }
+}
+
+@keyframes birdsDrift {
+  0%, 100% {
+    transform: translateX(-14px) translateY(3px);
+  }
+  50% {
+    transform: translateX(18px) translateY(-5px);
+  }
+}
+
+@keyframes wheelOrbit360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes petalDrop {
+  0% {
+    transform: translateY(-10vh) translateX(0px) rotate(0deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(52vh) translateX(16px) rotate(360deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(108vh) translateX(-10px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.pendulum-bell {
+  transform-origin: 50% 0%;
+  animation-name: bellPendulum;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.pendulum-bell-active {
+  animation-name: bellPendulumStrong;
+  animation-duration: 1.5s !important;
+}
+
+.flag-flutter {
+  transform-origin: left center;
+  animation: flagFlutter 2.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.birds-drift {
+  animation: birdsDrift 12s ease-in-out infinite;
+  will-change: transform;
+}
+
+.photo-wheel-orbit {
+  animation: wheelOrbit360 40s linear infinite;
+  will-change: transform;
+}
+
+/* Warm sandstone courtyard subtle paper grain & radial sheen */
+.courtyard-sand {
+  background: radial-gradient(circle at 50% 35%, #f0d09b 0%, #e5c28e 55%, #d9b075 100%);
+}
+
+/* Veined marble floor transition */
+.marble-floor-bg {
+  background: linear-gradient(180deg, #f9f2eb 0%, #fff4ea 55%, #fff4ea 100%);
+}
+
+/* Reference double scalloped card style */
+.scalloped-card {
+  position: relative;
+  background-color: #faf3e8;
+  box-shadow: 0 12px 28px rgba(95, 37, 15, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #fff4ea;
+}
+::-webkit-scrollbar-thumb {
+  background: #dda45d;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ab5626;
+}
