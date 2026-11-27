@@ -193,13 +193,13 @@ const MeetCoupleSection: React.FC = () => {
           />
 
           {/* Scroll-Highlighted Word-by-Word Paragraph inside the Golden Frame */}
-          <div className="absolute inset-x-[13%] top-[16%] bottom-[22%] flex items-center justify-center text-center">
+          <div className="absolute inset-x-[11%] min-[375px]:inset-x-[13%] top-[16%] bottom-[22%] flex items-center justify-center text-center">
             <p
               ref={storyRef}
               className={`leading-[1.28] ${
                 lang === 'gu'
-                  ? 'font-gujarati text-[14px] sm:text-xl lg:text-[26px]'
-                  : 'font-gotham font-normal text-[14px] sm:text-xl lg:text-[30px]'
+                  ? 'font-gujarati text-[12px] min-[375px]:text-[13.5px] sm:text-xl lg:text-[26px]'
+                  : 'font-gotham font-normal text-[12px] min-[375px]:text-[13.5px] sm:text-xl lg:text-[30px]'
               }`}
             >
               {words.map((w, idx) => (
@@ -215,7 +215,7 @@ const MeetCoupleSection: React.FC = () => {
         </motion.div>
 
         {/* "Almost time to celebrate" + Orbiting Circular Photo Wheel with Full-Box Vertical Soft Fade */}
-        <div className="relative mt-4 sm:mt-8 h-[310px] sm:h-[420px] lg:h-[520px] w-full overflow-hidden">
+        <div className="relative mt-4 sm:mt-8 h-[270px] min-[375px]:h-[310px] sm:h-[420px] lg:h-[520px] w-full overflow-hidden">
           {/* Mask applied directly to the viewport-clipped box so cards dissolve softly before bottom edge */}
           <div
             className="absolute inset-0 pointer-events-none"
@@ -226,7 +226,7 @@ const MeetCoupleSection: React.FC = () => {
                 'linear-gradient(to bottom, transparent 0%, black 7%, black 56%, transparent 94%)',
             }}
           >
-            <div className="absolute left-1/2 top-[48px] sm:top-[82px] lg:top-[118px] -translate-x-1/2 scale-[0.34] sm:scale-[0.68] lg:scale-100 origin-top">
+            <div className="absolute left-1/2 top-[38px] min-[375px]:top-[48px] sm:top-[82px] lg:top-[118px] -translate-x-1/2 scale-[0.27] min-[375px]:scale-[0.33] min-[420px]:scale-[0.37] sm:scale-[0.68] lg:scale-100 origin-top">
               <div
                 className="photo-wheel-orbit relative"
                 style={{ width: `${WHEEL_DIAMETER}px`, height: `${WHEEL_DIAMETER}px` }}

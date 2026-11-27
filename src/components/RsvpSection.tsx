@@ -110,12 +110,12 @@ const RsvpSection: React.FC = () => {
             </div>
 
             {/* 2-Column Side-by-Side Dropdowns matching Framer RSVP Form */}
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-2 min-[375px]:gap-2.5">
               <select
                 aria-label={t(weddingData.rsvp.eventPlaceholderGu, weddingData.rsvp.eventPlaceholderEn)}
                 value={selectedEventId}
                 onChange={(e) => setSelectedEventId(e.target.value)}
-                className={`w-full px-3 py-3 rounded-[12px] bg-white border border-[#E0E0E0] text-[13px] sm:text-[14px] text-[#5F250F] focus:outline-none focus:border-[#AB5626] ${
+                className={`w-full px-2.5 min-[375px]:px-3 py-3 rounded-[12px] bg-white border border-[#E0E0E0] text-[12px] min-[375px]:text-[13px] sm:text-[14px] text-[#5F250F] focus:outline-none focus:border-[#AB5626] ${
                   lang === 'gu' ? 'font-gujarati' : 'font-gotham'
                 }`}
               >
@@ -136,7 +136,7 @@ const RsvpSection: React.FC = () => {
                 aria-label={t(weddingData.rsvp.guestsPlaceholderGu, weddingData.rsvp.guestsPlaceholderEn)}
                 value={guests}
                 onChange={(e) => setGuests(e.target.value)}
-                className={`w-full px-3 py-3 rounded-[12px] bg-white border border-[#E0E0E0] text-[13px] sm:text-[14px] text-[#5F250F] focus:outline-none focus:border-[#AB5626] ${
+                className={`w-full px-2.5 min-[375px]:px-3 py-3 rounded-[12px] bg-white border border-[#E0E0E0] text-[12px] min-[375px]:text-[13px] sm:text-[14px] text-[#5F250F] focus:outline-none focus:border-[#AB5626] ${
                   lang === 'gu' ? 'font-gujarati' : 'font-gotham'
                 }`}
               >

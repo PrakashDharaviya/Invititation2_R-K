@@ -72,6 +72,10 @@ const TimelineSection: React.FC = () => {
           alt=""
           loading="lazy"
           className="md:hidden w-full h-auto block"
+          style={{
+            WebkitMaskImage: 'linear-gradient(to bottom, black 56%, transparent 96%)',
+            maskImage: 'linear-gradient(to bottom, black 56%, transparent 96%)',
+          }}
         />
         <img
           src={weddingData.framer.pillarBackdropDesktop}
@@ -100,10 +104,8 @@ const TimelineSection: React.FC = () => {
             loading="lazy"
             className="md:hidden w-full h-auto block"
             style={{
-              WebkitMaskImage:
-                'linear-gradient(to bottom, transparent 0%, transparent 7%, black 13%, black 88%, transparent 100%)',
-              maskImage:
-                'linear-gradient(to bottom, transparent 0%, transparent 7%, black 13%, black 88%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, black 88%, transparent 100%)',
             }}
           />
           <img
@@ -212,7 +214,7 @@ const TimelineSection: React.FC = () => {
               className="lg:hidden absolute left-1/2 -translate-x-1/2 top-[63%] w-[110px] h-[110px] mandala-spin opacity-85 pointer-events-none z-0"
             />
 
-            <div className="relative z-10 grid grid-cols-2 lg:grid-cols-6 gap-x-3 gap-y-5 lg:gap-4 items-start">
+            <div className="relative z-10 grid grid-cols-2 lg:grid-cols-6 gap-x-2 min-[375px]:gap-x-3 gap-y-4 min-[375px]:gap-y-5 lg:gap-4 items-start">
               {events.map((ev, idx) => (
                 <motion.div
                   key={ev.id}
@@ -238,24 +240,21 @@ const TimelineSection: React.FC = () => {
                   />
 
                   {/* Event Details Positioned Strictly Inside Cream Arch Zone */}
-                  <div className="absolute top-[13%] bottom-[35%] inset-x-[12%] flex flex-col items-center justify-between text-center py-1">
+                  <div className="absolute top-[13%] bottom-[34%] inset-x-[10%] min-[375px]:inset-x-[12%] flex flex-col items-center justify-between text-center py-0.5 min-[375px]:py-1">
                     <div>
                       <h3
-                        className={`text-[15px] sm:text-[18px] lg:text-[17px] font-medium text-[#5F250F] leading-tight ${
-                          lang === 'gu' ? 'font-gujarati font-bold text-[14px]' : 'font-ivyora'
+                        className={`font-medium text-[#5F250F] leading-tight ${
+                          lang === 'gu'
+                            ? 'font-gujarati font-bold text-[12px] min-[375px]:text-[14px] sm:text-[17px]'
+                            : 'font-ivyora text-[13px] min-[375px]:text-[15px] sm:text-[18px] lg:text-[17px]'
                         }`}
                       >
                         {t(ev.titleGu, ev.titleEn)}
                       </h3>
-                      {lang === 'en' && (
-                        <p className="font-gujarati text-[9px] sm:text-[10px] text-[#AB5626]/85 mt-0.5">
-                          {ev.titleGu}
-                        </p>
-                      )}
                     </div>
 
                     <div
-                      className={`space-y-0.5 text-[9.5px] sm:text-[11px] lg:text-[11px] text-[#5F250F] leading-tight ${
+                      className={`space-y-0.5 text-[8.5px] min-[375px]:text-[9.5px] sm:text-[11px] lg:text-[11px] text-[#5F250F] leading-[1.24] ${
                         lang === 'gu' ? 'font-gujarati' : 'font-gotham font-light'
                       }`}
                     >
@@ -269,7 +268,7 @@ const TimelineSection: React.FC = () => {
 
                     <a
                       href="#venue"
-                      className={`text-[8.5px] sm:text-[10px] text-[#5F250F]/80 hover:text-[#AB5626] underline underline-offset-2 ${
+                      className={`text-[8px] min-[375px]:text-[8.5px] sm:text-[10px] text-[#5F250F]/80 hover:text-[#AB5626] underline underline-offset-2 ${
                         lang === 'gu' ? 'font-gujarati' : 'font-gotham font-light'
                       }`}
                     >

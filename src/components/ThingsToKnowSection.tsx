@@ -57,8 +57,8 @@ const ThingsToKnowSection: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* 4 Info Columns Row — Original Circular Framer Icons + #DDA45D Vertical Dividers */}
-        <div className="max-w-[1040px] mx-auto grid grid-cols-4 divide-x-[1.5px] sm:divide-x-[3px] divide-[#DDA45D]">
+        {/* 4 Info Columns Row — Readable 2x2 grid on mobile phones, 4-column golden divider row on sm+ */}
+        <div className="max-w-[1040px] mx-auto grid grid-cols-2 sm:grid-cols-4 gap-y-5 sm:gap-y-0 sm:divide-x-[2px] lg:divide-x-[3px] divide-[#DDA45D]">
           {items.map((item, idx) => (
             <motion.div
               key={item.id}
@@ -67,17 +67,19 @@ const ThingsToKnowSection: React.FC = () => {
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.75, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              className="flex flex-col items-center text-center px-1 sm:px-4 py-2 min-w-0"
+              className={`flex flex-col items-center text-center px-3 sm:px-4 py-2 min-w-0 ${
+                idx % 2 === 1 ? 'border-l-[1.5px] border-[#DDA45D]/75 sm:border-l-0' : ''
+              }`}
             >
               <img
                 src={item.icon}
                 alt={t(item.titleGu, item.titleEn)}
                 loading="lazy"
-                className="w-10 h-10 sm:w-16 sm:h-16 lg:w-[88px] lg:h-[88px] object-contain mb-2 sm:mb-3 select-none"
+                className="w-12 h-12 sm:w-16 sm:h-16 lg:w-[88px] lg:h-[88px] object-contain mb-2 sm:mb-3 select-none"
               />
 
               <h3
-                className={`text-[12px] sm:text-[20px] lg:text-[26px] font-medium text-[#5F250F] leading-snug break-words w-full ${
+                className={`text-[15px] min-[375px]:text-[16px] sm:text-[20px] lg:text-[26px] font-medium text-[#5F250F] leading-snug break-words w-full ${
                   lang === 'gu' ? 'font-gujarati font-bold' : 'font-ivyora'
                 }`}
               >
@@ -85,7 +87,7 @@ const ThingsToKnowSection: React.FC = () => {
               </h3>
 
               <p
-                className={`mt-1 text-[8.5px] sm:text-[12px] lg:text-[13px] text-[#5F250F]/85 leading-[1.35] max-w-[200px] break-words w-full ${
+                className={`mt-1 text-[11px] min-[375px]:text-[11.5px] sm:text-[12px] lg:text-[13px] text-[#5F250F]/85 leading-[1.4] max-w-[200px] break-words w-full ${
                   lang === 'gu' ? 'font-gujarati' : 'font-ivyora'
                 }`}
               >

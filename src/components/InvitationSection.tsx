@@ -51,7 +51,7 @@ const InvitationSection: React.FC = () => {
   return (
     <div
       id="invitation"
-      className="absolute inset-x-0 top-[40%] bottom-[4%] md:top-[46.5%] md:bottom-[9%] z-20 flex flex-col items-center justify-center px-[16%] md:px-[18%] text-center pointer-events-auto"
+      className="absolute inset-x-0 top-[40%] bottom-[4%] md:top-[46.5%] md:bottom-[9%] z-20 flex flex-col items-center justify-center px-[14%] min-[375px]:px-[16%] md:px-[18%] text-center pointer-events-auto"
     >
       <div
         ref={linesRef}
@@ -62,89 +62,89 @@ const InvitationSection: React.FC = () => {
           <img
             src={weddingData.framer.ganpatiName}
             alt="Shree Ganeshay Namah"
-            className="w-[74px] sm:w-[130px] lg:w-[180px] h-auto mb-1 sm:mb-2 select-none"
+            className="w-[62px] min-[375px]:w-[74px] sm:w-[130px] lg:w-[180px] h-auto mb-1 sm:mb-2 select-none"
           />
           <img
             src={weddingData.framer.ganpatiIcon}
             alt="Lord Ganesha"
-            className="w-[40px] sm:w-[66px] lg:w-[82px] h-auto mb-1 sm:mb-2 select-none"
+            className="w-[34px] min-[375px]:w-[40px] sm:w-[66px] lg:w-[82px] h-auto mb-1 sm:mb-2 select-none"
           />
           <img
             src={weddingData.framer.shriShloka}
             alt="Vakratunda Mahakaya Shloka"
-            className="w-[155px] sm:w-[235px] lg:w-[285px] h-auto mb-2.5 sm:mb-5 select-none"
+            className="w-[132px] min-[375px]:w-[155px] sm:w-[235px] lg:w-[285px] h-auto mb-2 min-[375px]:mb-2.5 sm:mb-5 select-none"
           />
         </div>
 
         {lang === 'en' ? (
           <div className="w-full flex flex-col items-center">
-            <p className="invite-line font-gotham font-medium text-[10px] sm:text-base lg:text-[26px] leading-snug text-[#AB5626] max-w-[92%] mb-1.5 sm:mb-3">
+            <p className="invite-line font-gotham font-medium text-[9px] min-[375px]:text-[10px] sm:text-base lg:text-[26px] leading-snug text-[#AB5626] max-w-[94%] mb-1 min-[375px]:mb-1.5 sm:mb-3">
               {en.groomParents}
             </p>
 
-            <p className="invite-line font-ivyora text-[12px] sm:text-lg lg:text-[26px] leading-snug text-[#5F250F] whitespace-pre-line max-w-[92%] mb-2 sm:mb-4">
+            <p className="invite-line font-ivyora text-[10.5px] min-[375px]:text-[12px] sm:text-lg lg:text-[26px] leading-snug text-[#5F250F] whitespace-pre-line max-w-[94%] mb-1.5 min-[375px]:mb-2 sm:mb-4">
               {en.requestLine}
             </p>
 
-            <p className="invite-line font-miofarin text-[44px] sm:text-[90px] lg:text-[138px] leading-[1.02] text-[#AB5626]/75 select-none">
+            <p className="invite-line font-miofarin text-[38px] min-[375px]:text-[44px] sm:text-[90px] lg:text-[138px] leading-[1.02] text-[#AB5626]/75 select-none">
               {en.groomName}
             </p>
 
-            <p className="invite-line font-signature text-[34px] sm:text-[74px] lg:text-[116px] leading-[0.95] text-[#AB5626]/75 my-1 sm:my-1.5 select-none">
+            <p className="invite-line font-signature text-[28px] min-[375px]:text-[34px] sm:text-[74px] lg:text-[116px] leading-[0.95] text-[#AB5626]/75 my-0.5 min-[375px]:my-1 sm:my-1.5 select-none">
               {en.ampersand}
             </p>
 
-            <p className="invite-line font-miofarin text-[44px] sm:text-[90px] lg:text-[138px] leading-[1.02] text-[#AB5626]/75 select-none">
+            <p className="invite-line font-miofarin text-[38px] min-[375px]:text-[44px] sm:text-[90px] lg:text-[138px] leading-[1.02] text-[#AB5626]/75 select-none">
               {en.brideName}
             </p>
 
-            <p className="invite-line font-ivyora text-[10px] sm:text-base lg:text-[22px] text-[#5F250F] mt-2 sm:mt-4">
+            <p className="invite-line font-ivyora text-[9px] min-[375px]:text-[10px] sm:text-base lg:text-[22px] text-[#5F250F] mt-1.5 min-[375px]:mt-2 sm:mt-4">
               {en.daughterOfLabel}
             </p>
 
-            <p className="invite-line font-gotham font-medium text-[10px] sm:text-base lg:text-[26px] leading-snug text-[#AB5626] max-w-[92%] mt-0.5 sm:mt-1.5">
+            <p className="invite-line font-gotham font-medium text-[9px] min-[375px]:text-[10px] sm:text-base lg:text-[26px] leading-snug text-[#AB5626] max-w-[94%] mt-0.5 sm:mt-1.5">
               {en.brideParents}
             </p>
 
-            <p className="invite-line font-ivyora font-medium text-[15px] sm:text-2xl lg:text-[36px] text-[#5F250F] mt-3 sm:mt-6">
+            <p className="invite-line font-ivyora font-medium text-[13px] min-[375px]:text-[15px] sm:text-2xl lg:text-[36px] text-[#5F250F] mt-2 min-[375px]:mt-3 sm:mt-6">
               {en.eventsIntro}
             </p>
           </div>
         ) : (
-          <div className="w-full flex flex-col items-center space-y-1.5 sm:space-y-3 lg:space-y-4">
-            <p className="invite-line font-gujarati text-[10px] sm:text-sm lg:text-lg text-[#5F250F]/90 leading-relaxed max-w-[95%]">
+          <div className="w-full flex flex-col items-center space-y-1 min-[375px]:space-y-1.5 sm:space-y-3 lg:space-y-4">
+            <p className="invite-line font-gujarati text-[9px] min-[375px]:text-[10px] sm:text-sm lg:text-lg text-[#5F250F]/90 leading-relaxed max-w-[95%]">
               {gu.opening}
             </p>
 
-            <p className="invite-line font-gujarati font-semibold text-[11px] sm:text-base lg:text-2xl text-[#AB5626] leading-snug max-w-[95%]">
+            <p className="invite-line font-gujarati font-semibold text-[10px] min-[375px]:text-[11px] sm:text-base lg:text-2xl text-[#AB5626] leading-snug max-w-[95%]">
               {gu.groomParents}
             </p>
 
-            <p className="invite-line font-gujarati font-bold text-[26px] sm:text-5xl lg:text-[72px] text-[#5F250F] leading-tight py-0.5">
+            <p className="invite-line font-gujarati font-bold text-[22px] min-[375px]:text-[26px] sm:text-5xl lg:text-[72px] text-[#5F250F] leading-tight py-0.5">
               {gu.groomName}
             </p>
 
-            <p className="invite-line font-gujarati font-semibold text-[11px] sm:text-sm lg:text-xl text-[#AB5626]">
+            <p className="invite-line font-gujarati font-semibold text-[10px] min-[375px]:text-[11px] sm:text-sm lg:text-xl text-[#AB5626]">
               {gu.middleConnector}
             </p>
 
-            <p className="invite-line font-gujarati font-semibold text-[11px] sm:text-base lg:text-2xl text-[#AB5626] leading-snug max-w-[95%]">
+            <p className="invite-line font-gujarati font-semibold text-[10px] min-[375px]:text-[11px] sm:text-base lg:text-2xl text-[#AB5626] leading-snug max-w-[95%]">
               {gu.brideParents}
             </p>
 
-            <p className="invite-line font-gujarati font-bold text-[26px] sm:text-5xl lg:text-[72px] text-[#5F250F] leading-tight py-0.5">
+            <p className="invite-line font-gujarati font-bold text-[22px] min-[375px]:text-[26px] sm:text-5xl lg:text-[72px] text-[#5F250F] leading-tight py-0.5">
               {gu.brideName}
             </p>
 
-            <p className="invite-line font-gujarati font-semibold text-[10px] sm:text-sm lg:text-xl text-[#5F250F] leading-snug max-w-[92%]">
+            <p className="invite-line font-gujarati font-semibold text-[9px] min-[375px]:text-[10px] sm:text-sm lg:text-xl text-[#5F250F] leading-snug max-w-[94%]">
               {gu.dateLine}
             </p>
 
-            <p className="invite-line font-gujarati text-[9.5px] sm:text-xs lg:text-base text-[#5F250F]/80 leading-relaxed max-w-[92%]">
+            <p className="invite-line font-gujarati text-[8.5px] min-[375px]:text-[9.5px] sm:text-xs lg:text-base text-[#5F250F]/80 leading-relaxed max-w-[94%]">
               {gu.blessing}
             </p>
 
-            <p className="invite-line font-gujarati font-bold text-[12px] sm:text-lg lg:text-2xl text-[#5F250F] pt-1 sm:pt-3">
+            <p className="invite-line font-gujarati font-bold text-[11px] min-[375px]:text-[12px] sm:text-lg lg:text-2xl text-[#5F250F] pt-0.5 min-[375px]:pt-1 sm:pt-3">
               {gu.eventsIntro}
             </p>
           </div>

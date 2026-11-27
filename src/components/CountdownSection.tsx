@@ -169,16 +169,20 @@ const CountdownSection: React.FC = () => {
           className="mt-7 sm:mt-10"
         >
           {completed ? (
-            <p className="font-gujarati text-2xl sm:text-4xl font-bold text-[#AB5626]">
-              {weddingData.countdown.completedText}
+            <p
+              className={`text-xl sm:text-4xl font-bold text-[#AB5626] ${
+                lang === 'gu' ? 'font-gujarati' : 'font-ivyora'
+              }`}
+            >
+              {t(weddingData.countdown.completedTextGu, weddingData.countdown.completedTextEn)}
             </p>
           ) : (
-            <div className="flex justify-center items-center gap-6 sm:gap-12 lg:gap-16">
+            <div className="flex justify-center items-center gap-3.5 min-[375px]:gap-6 sm:gap-12 lg:gap-16">
               {units.map((u) => {
                 const formatted = String(u.value).padStart(2, '0');
                 return (
                   <div key={u.key} className="flex flex-col items-center">
-                    <div className="relative h-11 sm:h-16 lg:h-20 flex items-center justify-center overflow-hidden">
+                    <div className="relative h-10 min-[375px]:h-11 sm:h-16 lg:h-20 flex items-center justify-center overflow-hidden">
                       <AnimatePresence mode="popLayout">
                         <motion.span
                           key={formatted}
@@ -187,7 +191,7 @@ const CountdownSection: React.FC = () => {
                           exit={{ opacity: 0, y: -12, filter: 'blur(3px)' }}
                           transition={{ duration: 0.35 }}
                           style={{ fontFamily: '"Inter", sans-serif' }}
-                          className="font-bold text-[36px] sm:text-[54px] lg:text-[72px] text-[#DDA45D] leading-none tabular-nums"
+                          className="font-bold text-[30px] min-[375px]:text-[36px] sm:text-[54px] lg:text-[72px] text-[#DDA45D] leading-none tabular-nums"
                         >
                           {formatted}
                         </motion.span>

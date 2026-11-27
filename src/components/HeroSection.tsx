@@ -399,7 +399,7 @@ const HeroSection: React.FC = () => {
       {/* ==================== SKY PARALLAX BACKDROP ==================== */}
       <div className="relative w-full max-w-[1515px] mx-auto overflow-x-clip">
         {/* Background Sky Layer */}
-        <div className="relative w-full h-[575px] sm:h-[820px] lg:h-[1180px] bg-[#F7E8D4] pointer-events-none select-none overflow-hidden">
+        <div className="relative w-full h-[505px] min-[375px]:h-[570px] min-[420px]:h-[615px] sm:h-[820px] lg:h-[1180px] bg-[#F7E8D4] pointer-events-none select-none overflow-hidden">
           <img
             src={weddingData.framer.skyMobile}
             alt=""
@@ -518,13 +518,13 @@ const HeroSection: React.FC = () => {
         ))}
 
         {/* ==================== HERO NAMES OVER SKY (z-[8] so kinetic scroll dips behind Temple z-20) ==================== */}
-        <div className="absolute inset-x-0 top-0 z-[8] flex flex-col items-center text-center pt-10 sm:pt-9 lg:pt-8 px-4 pointer-events-none">
-          {/* Discreet Top Invocation constrained safely inside the upper floral toran arch */}
+        <div className="absolute inset-x-0 top-0 z-[8] flex flex-col items-center text-center pt-[23.5%] sm:pt-12 lg:pt-8 px-4 pointer-events-none">
+          {/* Discreet Top Invocation positioned strictly below the narrow top toran curve */}
           <motion.p
             initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className={`max-w-[205px] sm:max-w-[460px] lg:max-w-none text-[9px] sm:text-xs text-[#5F250F]/80 leading-snug tracking-wide mb-2.5 sm:mb-3 ${
+            className={`max-w-[70%] sm:max-w-[460px] lg:max-w-none text-[8px] min-[375px]:text-[9px] sm:text-xs text-[#5F250F]/80 leading-snug tracking-wide mb-2 min-[375px]:mb-2.5 sm:mb-3 ${
               lang === 'gu' ? 'font-gujarati' : 'font-gotham font-medium'
             }`}
           >
@@ -540,19 +540,19 @@ const HeroSection: React.FC = () => {
                     initial={{ opacity: 0, y: 36, scale: 1.08, filter: 'blur(10px)' }}
                     animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                     transition={{ duration: 1.05, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="font-miofarin text-[50px] sm:text-[98px] lg:text-[138px] leading-[1.02] text-[#AB5626]/75 select-none"
+                    className="font-miofarin text-[38px] min-[375px]:text-[45px] min-[410px]:text-[50px] sm:text-[98px] lg:text-[138px] leading-[1.02] text-[#AB5626]/75 select-none"
                   >
                     {weddingData.hero.groomEn}
                   </motion.h1>
                 </div>
 
-                <div ref={wedsRef} className="my-1 sm:my-1.5 z-10 will-change-transform">
+                <div ref={wedsRef} className="my-0.5 min-[375px]:my-1 sm:my-1.5 z-10 will-change-transform">
                   <motion.span
                     key="en-weds"
                     initial={{ opacity: 0, scale: 0.72, filter: 'blur(8px)' }}
                     animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                     transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    className="block font-signature text-[34px] sm:text-[74px] lg:text-[104px] leading-[0.95] text-[#AB5626]/80 select-none"
+                    className="block font-signature text-[26px] min-[375px]:text-[32px] min-[410px]:text-[36px] sm:text-[74px] lg:text-[104px] leading-[0.95] text-[#AB5626]/80 select-none"
                   >
                     {weddingData.hero.wedsEn}
                   </motion.span>
@@ -564,7 +564,7 @@ const HeroSection: React.FC = () => {
                     initial={{ opacity: 0, y: 36, scale: 1.08, filter: 'blur(10px)' }}
                     animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                     transition={{ duration: 1.05, delay: 0.56, ease: [0.22, 1, 0.36, 1] }}
-                    className="font-miofarin text-[50px] sm:text-[98px] lg:text-[138px] leading-[1.02] text-[#AB5626]/75 select-none"
+                    className="font-miofarin text-[38px] min-[375px]:text-[45px] min-[410px]:text-[50px] sm:text-[98px] lg:text-[138px] leading-[1.02] text-[#AB5626]/75 select-none"
                   >
                     {weddingData.hero.brideEn}
                   </motion.h2>
@@ -578,19 +578,19 @@ const HeroSection: React.FC = () => {
                     initial={{ opacity: 0, y: 34, scale: 1.06, filter: 'blur(8px)' }}
                     animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                     transition={{ duration: 1.0, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="font-gujarati font-bold text-[32px] sm:text-[64px] lg:text-[88px] leading-[1.2] text-[#AB5626]/90 select-none"
+                    className="font-gujarati font-bold text-[24px] min-[375px]:text-[30px] min-[410px]:text-[34px] sm:text-[64px] lg:text-[88px] leading-[1.2] text-[#AB5626]/90 select-none"
                   >
                     {weddingData.hero.groomGu}
                   </motion.h1>
                 </div>
 
-                <div ref={wedsRef} className="my-1.5 sm:mt-2 sm:mb-4 lg:mt-2 lg:mb-6 z-10 will-change-transform">
+                <div ref={wedsRef} className="my-1 min-[375px]:my-1.5 sm:mt-2 sm:mb-4 lg:mt-2 lg:mb-6 z-10 will-change-transform">
                   <motion.span
                     key="gu-weds"
                     initial={{ opacity: 0, scale: 0.78, filter: 'blur(6px)' }}
                     animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                     transition={{ duration: 0.85, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    className="block w-full text-center font-gujarati not-italic font-semibold text-[19px] sm:text-[32px] lg:text-[42px] leading-[1.3] text-[#5F250F]/85 select-none"
+                    className="block w-full text-center font-gujarati not-italic font-semibold text-[15px] min-[375px]:text-[18px] sm:text-[32px] lg:text-[42px] leading-[1.3] text-[#5F250F]/85 select-none"
                   >
                     {weddingData.hero.wedsGu}
                   </motion.span>
@@ -602,7 +602,7 @@ const HeroSection: React.FC = () => {
                     initial={{ opacity: 0, y: 34, scale: 1.06, filter: 'blur(8px)' }}
                     animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                     transition={{ duration: 1.0, delay: 0.56, ease: [0.22, 1, 0.36, 1] }}
-                    className="font-gujarati font-bold text-[32px] sm:text-[64px] lg:text-[88px] leading-[1.2] text-[#AB5626]/90 select-none"
+                    className="font-gujarati font-bold text-[24px] min-[375px]:text-[30px] min-[410px]:text-[34px] sm:text-[64px] lg:text-[88px] leading-[1.2] text-[#AB5626]/90 select-none"
                   >
                     {weddingData.hero.brideGu}
                   </motion.h2>
@@ -615,7 +615,7 @@ const HeroSection: React.FC = () => {
         {/* ==================== TEMPLE ARCHITECTURE & EMBEDDED ARCH INVITATION ==================== */}
         <div
           ref={templeWrapRef}
-          className="relative z-20 w-full -mt-[260px] sm:-mt-[410px] lg:-mt-[620px]"
+          className="relative z-20 w-full -mt-[215px] min-[375px]:-mt-[245px] min-[420px]:-mt-[265px] sm:-mt-[410px] lg:-mt-[620px]"
         >
           {/* Saffron Waving Flag anchored to exact temple peak kalash (x ~ 49.8%) */}
           <div className="absolute left-[49.3%] -top-[34px] sm:-top-[56px] lg:-top-[78px] z-20 pointer-events-none">
