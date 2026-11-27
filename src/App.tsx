@@ -6,7 +6,6 @@ import { LanguageProvider } from '@/context/LanguageContext';
 import weddingData from '@/data/wedding';
 import IntroGate from '@/components/IntroGate';
 import HeroSection from '@/components/HeroSection';
-import InvitationSection from '@/components/InvitationSection';
 import TimelineSection from '@/components/TimelineSection';
 import MeetCoupleSection from '@/components/MeetCoupleSection';
 import VenueSection from '@/components/VenueSection';
@@ -40,7 +39,7 @@ const App: React.FC = () => {
 
     if (!weddingData.features.enableIntroDoors) {
       audio.play().catch(() => {
-        // Browser blocked autoplay until user interaction
+        // Browser blocked autoplay until first user interaction
       });
     }
 
@@ -118,35 +117,27 @@ const App: React.FC = () => {
     <LanguageProvider>
       {!gateOpen && (
         <IntroGate
-          onOpen={() => setGateOpen(true)}
+          onOpen={() => {
+            setGateOpen(true);
+            setIsMusicPlaying(true);
+          }}
           audioRef={audioRef}
         />
       )}
 
       {gateOpen && (
-        <div className="relative min-h-screen w-full bg-[#FFF4EA]">
-          {/* Bottom-corner controls that never overlap Hero or section headers */}
+        <div className="min-h-screen w-full bg-[#F7E8D4] text-[#5F250F] selection:bg-[#AB5626]/20 selection:text-[#5F250F]">
           <LanguageToggle />
           <MuteButton isPlaying={isMusicPlaying} onToggle={handleToggleMusic} />
 
-          {/* Full-bleed responsive experience matching rammandir.framer.website */}
-          <main className="w-full overflow-x-hidden">
+          {/* Exact Framer Template Continuous Vertical Temple Scroll */}
+          <main className="w-full overflow-x-clip bg-[#FFEFE2]">
             <HeroSection />
-            <InvitationSection />
             <TimelineSection />
             <MeetCoupleSection />
             <VenueSection />
-
-            {/* Desktop: RSVP -> Things to Know | Mobile: Things to Know -> RSVP (exact reference order) */}
-            <div className="flex flex-col">
-              <div className="order-2 md:order-1">
-                <RsvpSection />
-              </div>
-              <div className="order-1 md:order-2">
-                <ThingsToKnowSection />
-              </div>
-            </div>
-
+            <ThingsToKnowSection />
+            <RsvpSection />
             <CountdownSection />
             <FooterSection />
           </main>

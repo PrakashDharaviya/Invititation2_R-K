@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { Language } from '@/data/wedding';
 
 interface LanguageContextType {
@@ -8,15 +8,19 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType>({
-  lang: 'gu',
+  lang: 'en',
   toggleLang: () => {},
-  t: (gu: string) => gu,
+  t: (_gu: string, en: string) => en,
 });
 
 export const useLanguage = () => useContext(LanguageContext);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lang, setLang] = useState<Language>('gu');
+  const [lang, setLang] = useState<Language>('en');
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const toggleLang = useCallback(() => {
     setLang((prev) => (prev === 'gu' ? 'en' : 'gu'));

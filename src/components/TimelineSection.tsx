@@ -1,138 +1,312 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLanguage } from '@/context/LanguageContext';
 import weddingData from '@/data/wedding';
-import {
-  ScallopedTimelineCardFrame,
-  LotusDividerSvg,
-} from '@/components/svg/TempleOrnaments';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TimelineSection: React.FC = () => {
   const { t, lang } = useLanguage();
   const events = weddingData.timeline.events;
+  const sectionRef = useRef<HTMLElement>(null);
+  const pillarRef = useRef<HTMLDivElement>(null);
+  const peacockRef = useRef<HTMLDivElement>(null);
+
+  // Multi-plane 2.5D ScrollTrigger parallax matching Framer's layered architecture
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      if (pillarRef.current) {
+        gsap.fromTo(
+          pillarRef.current,
+          { y: -12 },
+          {
+            y: 22,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: pillarRef.current,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1,
+            },
+          }
+        );
+      }
+
+      if (peacockRef.current) {
+        gsap.fromTo(
+          peacockRef.current,
+          { y: 18 },
+          {
+            y: -16,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: peacockRef.current,
+              start: 'top bottom',
+              end: '55% top',
+              scrub: 1,
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="timeline"
-      className="relative w-full courtyard-sand pt-10 sm:pt-16 pb-0 overflow-hidden"
+      className="relative z-10 w-full max-w-[1515px] mx-auto -mt-[13%] md:-mt-[9.5%] bg-transparent overflow-x-clip"
     >
-      {/* Subtle Diamond Courtyard Motifs matching reference */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-20 pointer-events-none"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 20% 25%, rgba(171,86,38,0.22) 0%, transparent 25%), radial-gradient(circle at 80% 45%, rgba(171,86,38,0.18) 0%, transparent 25%)',
-        }}
-      />
-
-      {/* Section Heading */}
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 text-center px-4 max-w-[1160px] mx-auto mb-8 sm:mb-12"
-      >
-        <h2
-          className={`text-[#5F250F] leading-tight ${
-            lang === 'gu'
-              ? 'font-gujarati font-bold text-3xl sm:text-5xl lg:text-[64px]'
-              : 'font-display font-medium text-[28px] sm:text-5xl lg:text-[74px]'
-          }`}
-        >
-          {lang === 'gu' ? (
-            weddingData.timeline.headingGu
-          ) : (
-            <>
-              <span className="md:hidden">{weddingData.timeline.headingMobileEn}</span>
-              <span className="hidden md:inline">{weddingData.timeline.headingEn}</span>
-            </>
-          )}
-        </h2>
-        <p
-          className={`mt-2 text-[13px] sm:text-base lg:text-lg text-[#5F250F]/85 ${
-            lang === 'gu' ? 'font-gujarati' : 'font-sans'
-          }`}
-        >
-          {t(weddingData.timeline.subtextGu, weddingData.timeline.subtextEn)}
-        </p>
-      </motion.div>
-
-      {/* Cards Grid: 6 horizontally in 1 row on desktop (lg:grid-cols-6), static 2x3 grid on Poco M4 Pro / mobile (grid-cols-2) */}
-      <div className="relative z-10 max-w-[1340px] mx-auto px-3.5 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-3.5 items-stretch max-w-[400px] sm:max-w-[760px] lg:max-w-none mx-auto">
-          {events.map((ev, idx) => (
-            <motion.div
-              key={ev.id}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.65, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              className="h-[258px] sm:h-[310px] lg:h-[325px]"
-            >
-              <ScallopedTimelineCardFrame className="h-full">
-                {/* Event Title */}
-                <div className="pt-1">
-                  <h3
-                    className={`text-lg sm:text-[21px] leading-snug font-semibold text-[#AB5626] ${
-                      lang === 'gu' ? 'font-gujarati font-bold' : 'font-display'
-                    }`}
-                  >
-                    {t(ev.titleGu, ev.titleEn)}
-                  </h3>
-                  {lang === 'en' && (
-                    <p className="font-gujarati text-[11px] text-[#5F250F]/70 mt-0.5">
-                      {ev.titleGu}
-                    </p>
-                  )}
-                </div>
-
-                {/* Day, Date, Venue, Time */}
-                <div
-                  className={`space-y-1 text-[11px] sm:text-xs text-[#5F250F] leading-snug ${
-                    lang === 'gu' ? 'font-gujarati' : 'font-sans'
-                  }`}
-                >
-                  <p className="font-medium text-[#5F250F]/80">{t(ev.dayGu, ev.dayEn)}</p>
-                  <p className="font-semibold">{t(ev.dateGu, ev.dateEn)}</p>
-                  <p className="text-[#5F250F]/85">{t(ev.placeGu, ev.placeEn)}</p>
-                  <p className="font-semibold text-[#AB5626] pt-0.5">
-                    {t(ev.timeGu, ev.timeEn)}
-                  </p>
-                </div>
-
-                {/* Bottom Link */}
-                <a
-                  href="#venue"
-                  className={`text-[9px] sm:text-[10px] tracking-wide text-[#5F250F]/75 hover:text-[#AB5626] underline underline-offset-2 ${
-                    lang === 'gu' ? 'font-gujarati' : 'font-sans'
-                  }`}
-                >
-                  {t(weddingData.timeline.moreDetailsGu, weddingData.timeline.moreDetailsEn)}
-                </a>
-              </ScallopedTimelineCardFrame>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Pink Lotus Horizontal Divider */}
-      <div className="relative z-10 py-8 sm:py-12 px-6">
-        <LotusDividerSvg className="max-w-[420px] mx-auto" />
-      </div>
-
-      {/* Grand Floral Mandap & Veined Cream Marble Floor */}
-      <div className="relative z-10 w-full pointer-events-none select-none">
-        <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[#DFB87D] to-transparent z-10" />
+      {/* Top Pillar Backdrop Transition from Temple Entryway */}
+      <div ref={pillarRef} className="relative w-full pointer-events-none select-none z-10">
         <img
-          src={weddingData.assets.floralMandapScene}
-          alt="Wedding floral mandap"
+          src={weddingData.framer.pillarBackdropMobile}
+          alt=""
           loading="lazy"
-          className="w-full h-auto max-h-[680px] object-cover object-center block"
+          className="md:hidden w-full h-auto block"
         />
-        <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#F9F2EB] to-transparent z-10" />
+        <img
+          src={weddingData.framer.pillarBackdropDesktop}
+          alt=""
+          loading="lazy"
+          className="hidden md:block w-full h-auto block"
+        />
+      </div>
+
+      {/* Peacock Garden & Sandstone Courtyard (overlaps Pillar lower foliage cleanly with no upper beige slice) */}
+      <div className="relative z-20 w-full -mt-[63%] md:-mt-[40.5%] overflow-hidden">
+        {/* Courtyard Warm Sandstone Backdrop starting strictly BELOW the foliage/bridge overlap */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-[30%] md:top-[22%] bottom-0 bg-gradient-to-b from-[#E5C28E]/0 via-[#E5C28E] via-15% to-[#FFEFE2] pointer-events-none"
+        />
+
+        {/* Peacock Terrace Artwork pinned cleanly on top of Pillar foliage with soft parallax */}
+        <div
+          ref={peacockRef}
+          className="absolute inset-x-0 top-0 w-full pointer-events-none select-none z-10"
+        >
+          <img
+            src={weddingData.framer.peacockBackdropMobile}
+            alt="Peacock Garden Courtyard"
+            loading="lazy"
+            className="md:hidden w-full h-auto block"
+            style={{
+              WebkitMaskImage:
+                'linear-gradient(to bottom, transparent 0%, transparent 7%, black 13%, black 88%, transparent 100%)',
+              maskImage:
+                'linear-gradient(to bottom, transparent 0%, transparent 7%, black 13%, black 88%, transparent 100%)',
+            }}
+          />
+          <img
+            src={weddingData.framer.peacockBackdropDesktop}
+            alt="Peacock Garden Courtyard"
+            loading="lazy"
+            className="hidden md:block w-full h-auto block"
+            style={{
+              WebkitMaskImage: 'linear-gradient(to bottom, black 86%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, black 86%, transparent 100%)',
+            }}
+          />
+        </div>
+
+        {/* Flow Content Positioned Cleanly Below the Peacock Archway (145% of w mobile / 76% of w desktop) */}
+        <div className="relative z-20 pt-[145%] md:pt-[76%] pb-14 sm:pb-20 lg:pb-28 px-3 sm:px-6 lg:px-8">
+          {/* Side Starburst Rays on Mobile (matching Framer Pillar Ornament L1-L3 / R1-R3) */}
+          <img
+            src={weddingData.framer.raysLeft1}
+            alt=""
+            aria-hidden="true"
+            className="md:hidden absolute left-0 top-[46%] w-[52px] opacity-90 pointer-events-none select-none"
+          />
+          <img
+            src={weddingData.framer.raysLeft3}
+            alt=""
+            aria-hidden="true"
+            className="md:hidden absolute left-0 top-[76%] w-[52px] opacity-90 pointer-events-none select-none"
+          />
+          <img
+            src={weddingData.framer.raysRight}
+            alt=""
+            aria-hidden="true"
+            className="md:hidden absolute right-0 top-[60%] w-[52px] opacity-90 pointer-events-none select-none"
+          />
+
+          {/* Section Heading ("Wedding Celebration Timeline" + Subtext) */}
+          <motion.div
+            initial={{ opacity: 0, y: 36, scale: 1.06, filter: 'blur(8px)' }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center max-w-[920px] mx-auto mb-6 sm:mb-10 lg:mb-12"
+          >
+            <h2
+              className={`text-[#5F250F] leading-[1.06] ${
+                lang === 'gu'
+                  ? 'font-gujarati font-bold text-[28px] sm:text-5xl lg:text-[68px]'
+                  : 'font-ivyora font-medium text-[28px] sm:text-5xl lg:text-[78px]'
+              }`}
+            >
+              {lang === 'gu' ? (
+                weddingData.timeline.headingGu
+              ) : (
+                <>
+                  <span className="md:hidden">{weddingData.timeline.headingMobileEn}</span>
+                  <span className="hidden md:inline">{weddingData.timeline.headingEn}</span>
+                </>
+              )}
+            </h2>
+            <p
+              className={`mt-2 sm:mt-3 text-[12px] sm:text-base lg:text-[22px] text-[#5F250F] ${
+                lang === 'gu' ? 'font-gujarati' : 'font-gotham font-light'
+              }`}
+            >
+              {t(weddingData.timeline.subtextGu, weddingData.timeline.subtextEn)}
+            </p>
+          </motion.div>
+
+          {/* Peacock Pink Lotus Accent (Desktop above cards) */}
+          <div className="hidden lg:flex justify-center -mt-2 mb-5 pointer-events-none select-none">
+            <img
+              src={weddingData.framer.peacockLotus}
+              alt=""
+              aria-hidden="true"
+              className="w-[210px] h-auto"
+            />
+          </div>
+
+          {/* ================= CARDS GRID ================= */}
+          <div className="relative max-w-[400px] sm:max-w-[740px] lg:max-w-[1410px] mx-auto">
+            {/* Desktop Scalloped Mandalas Above Card Gaps (1 up .. 5 up) */}
+            <div className="hidden lg:flex justify-between px-[11.5%] -mb-8 pointer-events-none select-none">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <img
+                  key={`up-${i}`}
+                  src={weddingData.framer.mandalaScalloped}
+                  alt=""
+                  aria-hidden="true"
+                  className="w-[104px] h-[104px] mandala-spin opacity-90"
+                />
+              ))}
+            </div>
+
+            {/* Mobile Scalloped Mandalas between card rows */}
+            <img
+              src={weddingData.framer.mandalaScalloped}
+              alt=""
+              aria-hidden="true"
+              className="lg:hidden absolute left-1/2 -translate-x-1/2 top-[29%] w-[110px] h-[110px] mandala-spin opacity-85 pointer-events-none z-0"
+            />
+            <img
+              src={weddingData.framer.mandalaScalloped}
+              alt=""
+              aria-hidden="true"
+              className="lg:hidden absolute left-1/2 -translate-x-1/2 top-[63%] w-[110px] h-[110px] mandala-spin opacity-85 pointer-events-none z-0"
+            />
+
+            <div className="relative z-10 grid grid-cols-2 lg:grid-cols-6 gap-x-3 gap-y-5 lg:gap-4 items-start">
+              {events.map((ev, idx) => (
+                <motion.div
+                  key={ev.id}
+                  initial={{
+                    opacity: 0,
+                    y: 40,
+                    rotate: idx % 2 === 0 ? -4 : 4,
+                  }}
+                  whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+                  viewport={{ once: true, amount: 0.12 }}
+                  transition={{ duration: 0.7, delay: idx * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                  className={`relative w-full aspect-[1515/2342] ${
+                    idx === 4 ? 'lg:translate-y-4' : ''
+                  }`}
+                >
+                  {/* Original Framer Scalloped Arch Event Frame PNG */}
+                  <img
+                    src={weddingData.framer.cardFrame}
+                    alt=""
+                    aria-hidden="true"
+                    className="w-full h-full object-contain block select-none pointer-events-none drop-shadow-[0_10px_22px_rgba(95,37,15,0.12)]"
+                  />
+
+                  {/* Event Details Positioned Strictly Inside Cream Arch Zone */}
+                  <div className="absolute top-[13%] bottom-[35%] inset-x-[12%] flex flex-col items-center justify-between text-center py-1">
+                    <div>
+                      <h3
+                        className={`text-[15px] sm:text-[18px] lg:text-[17px] font-medium text-[#5F250F] leading-tight ${
+                          lang === 'gu' ? 'font-gujarati font-bold text-[14px]' : 'font-ivyora'
+                        }`}
+                      >
+                        {t(ev.titleGu, ev.titleEn)}
+                      </h3>
+                      {lang === 'en' && (
+                        <p className="font-gujarati text-[9px] sm:text-[10px] text-[#AB5626]/85 mt-0.5">
+                          {ev.titleGu}
+                        </p>
+                      )}
+                    </div>
+
+                    <div
+                      className={`space-y-0.5 text-[9.5px] sm:text-[11px] lg:text-[11px] text-[#5F250F] leading-tight ${
+                        lang === 'gu' ? 'font-gujarati' : 'font-gotham font-light'
+                      }`}
+                    >
+                      <p>{t(ev.dayGu, ev.dayEn)}</p>
+                      <p className="font-normal">{t(ev.dateGu, ev.dateEn)}</p>
+                      <p className="opacity-90">{t(ev.placeGu, ev.placeEn)}</p>
+                      <p className="font-medium text-[#AB5626] pt-0.5">
+                        {t(ev.timeGu, ev.timeEn)}
+                      </p>
+                    </div>
+
+                    <a
+                      href="#venue"
+                      className={`text-[8.5px] sm:text-[10px] text-[#5F250F]/80 hover:text-[#AB5626] underline underline-offset-2 ${
+                        lang === 'gu' ? 'font-gujarati' : 'font-gotham font-light'
+                      }`}
+                    >
+                      {t(weddingData.timeline.moreDetailsGu, weddingData.timeline.moreDetailsEn)}
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Desktop Scalloped Mandalas Below Card Gaps (1 down .. 5 down) */}
+            <div className="hidden lg:flex justify-between px-[11.5%] -mt-12 pointer-events-none select-none">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <img
+                  key={`down-${i}`}
+                  src={weddingData.framer.mandalaScalloped}
+                  alt=""
+                  aria-hidden="true"
+                  className="w-[104px] h-[104px] mandala-spin opacity-90"
+                />
+              ))}
+            </div>
+
+            {/* Mobile Bottom Pink Lotus Accent */}
+            <div className="lg:hidden flex justify-center mt-5 pointer-events-none select-none">
+              <img
+                src={weddingData.framer.peacockLotus}
+                alt=""
+                aria-hidden="true"
+                className="w-[140px] h-auto"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Soft bottom sandstone -> cream blend into Floral Mandap Section */}
+        <div className="absolute inset-x-0 bottom-0 h-28 sm:h-40 bg-gradient-to-t from-[#FFEFE2] via-[#FFEFE2]/80 to-transparent pointer-events-none z-20" />
       </div>
     </section>
   );

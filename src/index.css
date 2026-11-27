@@ -2,6 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Original Framer Template Fonts */
+@font-face {
+  font-family: "Miofarin Regular";
+  src: url("@/assets/fonts/MiofarinRegular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brother Signature Regular";
+  src: url("@/assets/fonts/BrotherSignatureRegular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IvyOra Display";
+  src: url("@/assets/fonts/IvyOraDisplayRegular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IvyOra Display";
+  src: url("@/assets/fonts/IvyOraDisplayMedium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IvyOra Display";
+  src: url("@/assets/fonts/IvyOraDisplayBold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("@/assets/fonts/GothamLight.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("@/assets/fonts/GothamBook.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("@/assets/fonts/GothamMedium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
 @layer base {
   * {
     margin: 0;
@@ -11,28 +76,28 @@
 
   html {
     scroll-behavior: auto;
-    background-color: #fff4ea;
+    background-color: #f7e8d4;
   }
 
   body {
     color: #5f250f;
-    background-color: #fff4ea;
+    background-color: #f7e8d4;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Keyframes matching rammandir.framer.website animations */
+/* Framer Template Keyframes */
 @keyframes bellPendulum {
   0%, 100% {
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(6deg);
+    transform: rotate(5deg);
   }
   75% {
-    transform: rotate(-6deg);
+    transform: rotate(-5deg);
   }
 }
 
@@ -41,25 +106,16 @@
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(13deg);
+    transform: rotate(12deg);
   }
   75% {
-    transform: rotate(-13deg);
-  }
-}
-
-@keyframes flagFlutter {
-  0%, 100% {
-    transform: skewY(0deg) scaleX(1);
-  }
-  50% {
-    transform: skewY(-5deg) scaleX(0.92);
+    transform: rotate(-12deg);
   }
 }
 
 @keyframes birdsDrift {
   0%, 100% {
-    transform: translateX(-14px) translateY(3px);
+    transform: translateX(-16px) translateY(3px);
   }
   50% {
     transform: translateX(18px) translateY(-5px);
@@ -72,6 +128,26 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes mandalaSlowSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scrollArrowPulse {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
   }
 }
 
@@ -103,14 +179,8 @@
   animation-duration: 1.5s !important;
 }
 
-.flag-flutter {
-  transform-origin: left center;
-  animation: flagFlutter 2.2s ease-in-out infinite;
-  will-change: transform;
-}
-
 .birds-drift {
-  animation: birdsDrift 12s ease-in-out infinite;
+  animation: birdsDrift 14s ease-in-out infinite;
   will-change: transform;
 }
 
@@ -119,21 +189,14 @@
   will-change: transform;
 }
 
-/* Warm sandstone courtyard subtle paper grain & radial sheen */
-.courtyard-sand {
-  background: radial-gradient(circle at 50% 35%, #f0d09b 0%, #e5c28e 55%, #d9b075 100%);
+.mandala-spin {
+  animation: mandalaSlowSpin 48s linear infinite;
+  will-change: transform;
 }
 
-/* Veined marble floor transition */
-.marble-floor-bg {
-  background: linear-gradient(180deg, #f9f2eb 0%, #fff4ea 55%, #fff4ea 100%);
-}
-
-/* Reference double scalloped card style */
-.scalloped-card {
-  position: relative;
-  background-color: #faf3e8;
-  box-shadow: 0 12px 28px rgba(95, 37, 15, 0.12);
+.scroll-arrow-pulse {
+  animation: scrollArrowPulse 2s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -150,7 +213,7 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #fff4ea;
+  background: #f7e8d4;
 }
 ::-webkit-scrollbar-thumb {
   background: #dda45d;

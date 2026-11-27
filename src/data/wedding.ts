@@ -4,19 +4,66 @@
 // image paths here without touching any components.
 // ============================================================
 
-import heroTempleImg from '@/assets/scenes/hero-temple.jpg';
-import chhatriPeacocksImg from '@/assets/scenes/chhatri-peacocks.jpg';
-import floralMandapImg from '@/assets/scenes/floral-mandap.jpg';
-import footerElephantImg from '@/assets/scenes/footer-elephant.jpg';
-import floralCornerImg from '@/assets/scenes/floral-corner.jpg';
-import coupleSampleImg from '@/assets/couple.jpg';
-import gallery1Img from '@/assets/gallery/1.jpg';
-import gallery2Img from '@/assets/gallery/2.jpg';
-import gallery3Img from '@/assets/gallery/3.jpg';
-import gallery4Img from '@/assets/gallery/4.jpg';
-import gallery5Img from '@/assets/gallery/5.jpg';
-import gallery6Img from '@/assets/gallery/6.jpg';
+// Original Framer Template Assets (from Rajnesh_Kinjal_Updated.zip)
+import skyDesktop from '@/assets/framer/sky-desktop.webp';
+import skyMobile from '@/assets/framer/sky-mobile.webp';
+import sunDesktop from '@/assets/framer/sun-desktop.webp';
+import sunMobile from '@/assets/framer/sun-mobile.webp';
+import mountainDesktop from '@/assets/framer/mountain-desktop.webp';
+import mountainMobile from '@/assets/framer/mountain-mobile.webp';
+import cloudDesktop from '@/assets/framer/cloud-desktop.webp';
+import cloudMobile from '@/assets/framer/cloud-mobile.webp';
+import templeDesktop from '@/assets/framer/temple-desktop.webp';
+import templeMobile from '@/assets/framer/temple-mobile.webp';
+import spireDesktop from '@/assets/framer/spire-desktop.webp';
+import spireMobile from '@/assets/framer/spire-mobile.webp';
+import bellsFrameDesktop from '@/assets/framer/bells-frame-desktop.webp';
+import bellsFrameMobile from '@/assets/framer/bells-frame-mobile.webp';
+import bellLeft from '@/assets/framer/bell-left.png';
+import bellRight from '@/assets/framer/bell-right.png';
+import ganpatiName from '@/assets/framer/ganpati-name.webp';
+import ganpatiIcon from '@/assets/framer/ganpati-icon.webp';
+import shriShloka from '@/assets/framer/shri-shloka.webp';
+import wakratundShloka from '@/assets/framer/wakratund-shloka.webp';
+
+import pillarBackdropDesktop from '@/assets/framer/pillar-backdrop-desktop.webp';
+import pillarBackdropMobile from '@/assets/framer/pillar-backdrop-mobile.webp';
+import peacockBackdropDesktop from '@/assets/framer/peacock-backdrop-desktop.webp';
+import peacockBackdropMobile from '@/assets/framer/peacock-backdrop-mobile.webp';
+import cardFrame from '@/assets/framer/card-frame-desktop.png';
+import peacockLotus from '@/assets/framer/peacock-lotus.webp';
+import mandalaScalloped from '@/assets/framer/mandala-scalloped.webp';
+import raysLeft1 from '@/assets/framer/rays-left-1.webp';
+import raysLeft3 from '@/assets/framer/rays-left-3.webp';
+import raysRight from '@/assets/framer/rays-right.webp';
+
+import coupleBackdropDesktop from '@/assets/framer/couple-backdrop-desktop.webp';
+import coupleBackdropMobile from '@/assets/framer/couple-backdrop-mobile.webp';
+import mandalaRound from '@/assets/framer/mandala-round.webp';
+import messageFrameDesktop from '@/assets/framer/message-frame-desktop.webp';
+import messageFrameMobile from '@/assets/framer/message-frame-mobile.webp';
+import coupleBannerDesktop from '@/assets/framer/couple-banner-desktop.webp';
+import coupleBannerMobile from '@/assets/framer/couple-banner-mobile.webp';
+
+import locationCountdownBgDesktop from '@/assets/framer/location-countdown-bg-desktop.webp';
+import locationCountdownBgMobile from '@/assets/framer/location-countdown-bg-mobile.webp';
+import ornamentWide from '@/assets/framer/ornament-wide.webp';
+import ornamentMobile from '@/assets/framer/ornament-mobile.webp';
+import starDividerWide from '@/assets/framer/star-divider-wide.webp';
+import starDividerMobile from '@/assets/framer/star-divider-mobile.webp';
+import countdownBackdropDesktop from '@/assets/framer/countdown-backdrop-desktop.webp';
+import countdownBackdropMobile from '@/assets/framer/countdown-backdrop-mobile.webp';
+import iconHashtag from '@/assets/framer/icon-hashtag.webp';
+import iconWeather from '@/assets/framer/icon-weather.webp';
+import iconStaff from '@/assets/framer/icon-staff.webp';
+import iconParking from '@/assets/framer/icon-parking.webp';
+
+// Background Audio
 import krissFluteAudio from '@/assets/audio/Kriss_Flute.mp3';
+
+// Gallery Celebration Photos (for the Photo Wheel cards)
+import galleryMehendi from '@/assets/gallery/2.jpg';
+import galleryDandiya from '@/assets/gallery/3.jpg';
 
 export type Language = 'gu' | 'en';
 
@@ -53,37 +100,86 @@ export interface ThingToKnowItem {
   titleGu: string;
   descriptionEn: string;
   descriptionGu: string;
+  icon: string;
 }
 
 export const weddingData = {
   // ---- FEATURES ----
   features: {
-    // Set true to show 3D temple doors before the Hero; false matches reference instant Hero entry
+    // Set true to show 3D temple doors before Hero; false matches reference instant Hero entry
     enableIntroDoors: false,
   },
 
-  // ---- ASSETS (Bundled via ES imports + /public/assets/ user overrides) ----
+  // ---- ASSETS (Original Framer Assets from Zip + Audio) ----
   assets: {
     music: krissFluteAudio,
-    // Swap /public/assets/couple.jpg or update directly here
-    couplePhoto: coupleSampleImg,
-    coupleFallback: coupleSampleImg,
+    // Swap coupleBannerDesktop/Mobile or gallery[] with Rajnesh & Kinjal's photos when ready
+    couplePhoto: coupleBannerDesktop,
+    couplePhotoMobile: coupleBannerMobile,
+    coupleFallback: coupleBannerDesktop,
     ogPreview: '/assets/og-preview.jpg',
-    // Bundled scenic illustrations
-    heroScene: heroTempleImg,
-    chhatriPeacocksScene: chhatriPeacocksImg,
-    floralMandapScene: floralMandapImg,
-    footerElephantScene: footerElephantImg,
-    floralCornerScene: floralCornerImg,
-    // Photo wheel / gallery (replace src/assets/gallery/1..6.jpg or point to /assets/gallery/*.jpg)
+    // Photo Wheel Gallery (filled portrait/square photography without blank sky margins)
     gallery: [
-      gallery1Img,
-      gallery2Img,
-      gallery3Img,
-      gallery4Img,
-      gallery5Img,
-      gallery6Img,
+      coupleBannerDesktop,
+      galleryMehendi,
+      galleryDandiya,
+      coupleBannerDesktop,
+      galleryMehendi,
+      galleryDandiya,
     ],
+  },
+
+  // Original Framer Template Graphic Layers
+  framer: {
+    skyDesktop,
+    skyMobile,
+    sunDesktop,
+    sunMobile,
+    mountainDesktop,
+    mountainMobile,
+    cloudDesktop,
+    cloudMobile,
+    templeDesktop,
+    templeMobile,
+    spireDesktop,
+    spireMobile,
+    bellsFrameDesktop,
+    bellsFrameMobile,
+    bellLeft,
+    bellRight,
+    ganpatiName,
+    ganpatiIcon,
+    shriShloka,
+    wakratundShloka,
+    pillarBackdropDesktop,
+    pillarBackdropMobile,
+    peacockBackdropDesktop,
+    peacockBackdropMobile,
+    cardFrame,
+    peacockLotus,
+    mandalaScalloped,
+    raysLeft1,
+    raysLeft3,
+    raysRight,
+    coupleBackdropDesktop,
+    coupleBackdropMobile,
+    mandalaRound,
+    messageFrameDesktop,
+    messageFrameMobile,
+    coupleBannerDesktop,
+    coupleBannerMobile,
+    locationCountdownBgDesktop,
+    locationCountdownBgMobile,
+    ornamentWide,
+    ornamentMobile,
+    starDividerWide,
+    starDividerMobile,
+    countdownBackdropDesktop,
+    countdownBackdropMobile,
+    iconHashtag,
+    iconWeather,
+    iconStaff,
+    iconParking,
   },
 
   // ---- INTRO GATE (when enableIntroDoors is true) ----
@@ -94,7 +190,7 @@ export const weddingData = {
     buttonEn: 'Tap to Open',
   },
 
-  // ---- SECTION 1: HERO / TEMPLE ----
+  // ---- SECTION 1: HERO / TEMPLE + INVITATION ----
   hero: {
     invocationGu: 'શ્રી ગણેશાય નમઃ  |  શ્રી ચામુંડા માં  |  શ્રી સુરાપુરા દાદા',
     invocationEn: 'Shree Ganeshay Namah  |  Shree Chamunda Maa  |  Shree Surapura Dada',
@@ -107,8 +203,8 @@ export const weddingData = {
     coupleLineGu: 'ચિ. રજનેશ  સંગ  ચિ. કિંજલ',
     coupleLineEn: 'Rajnesh weds Kinjal',
     // TODO: Update exact date when finalized
-    dateDisplayEn: '16th Jan 2027',
-    dateDisplayGu: 'તા. ૧૬ જાન્યુઆરી ૨૦૨૭',
+    dateDisplayEn: '15–16 Jan 2027',
+    dateDisplayGu: 'તા. ૧૫–૧૬ જાન્યુઆરી ૨૦૨૭',
   },
 
   // ---- SECTION 2: INVITATION / PARENTS ----
@@ -117,7 +213,7 @@ export const weddingData = {
     en: {
       groomParents: 'Shri Dayabhai Kurjibhai Mandaviya & Smt. Bhanuben Mandaviya',
       requestLine:
-        'Cordially request the honor of your presence at the wedding celebration of our beloved son',
+        'Cordially request the honor of your\npresence at the wedding celebration of\nour beloved son',
       groomName: 'Rajnesh',
       ampersand: 'and',
       brideName: 'Kinjal',
@@ -173,7 +269,7 @@ export const weddingData = {
         titleGu: 'રૂડા મામેરા',
         dayEn: 'Friday',
         dayGu: 'શુક્રવાર',
-        dateEn: '15th jan 2027',
+        dateEn: '15th Jan 2027',
         dateGu: '૧૫ જાન. ૨૦૨૭',
         placeEn: 'Khimrana, Jamnagar',
         placeGu: 'ખીમરાણા, જામનગર',
@@ -249,8 +345,8 @@ export const weddingData = {
       'Our hearts are full and our smiles wide. Come celebrate our love, share our joy, and bless us as we begin this new journey together.',
     messageGu:
       'અમારા હૈયામાં અપાર આનંદ છે અને ચહેરા પર સ્મિત છે. અમારા પ્રેમ, સ્નેહ અને ખુશીની આ ઉજવણીમાં સહભાગી થઈને નવજીવનની શુભ શરૂઆત માટે અમને અંતરના આશીર્વાદ આપશો.',
-    almostTimeEn: 'Almost time to celebrate',
-    almostTimeGu: 'ઉજવણીની શુભ ઘડી નજીક છે',
+    almostTimeEn: 'Almost time\nto celebrate',
+    almostTimeGu: 'ઉજવણીની\nશુભ ઘડી નજીક છે',
   },
 
   // ---- SECTION 5: VENUE + MAP ----
@@ -330,6 +426,7 @@ export const weddingData = {
         titleGu: 'હેશટેગ',
         descriptionEn: 'Please use #RajneshWedsKinjal when posting photos',
         descriptionGu: 'ફોટા શેર કરતી વખતે #RajneshWedsKinjal હેશટેગ વાપરશો',
+        icon: iconHashtag,
       },
       {
         id: 'weather',
@@ -337,6 +434,7 @@ export const weddingData = {
         titleGu: 'હવામાન',
         descriptionEn: 'Pleasant & sunny weather around 24–28°C at the venue',
         descriptionGu: 'પ્રસંગ સ્થળે સુખદ અને ખુશનુમા વાતાવરણ (૨૪–૨૮°C) રહેશે',
+        icon: iconWeather,
       },
       {
         id: 'staff',
@@ -344,13 +442,15 @@ export const weddingData = {
         titleGu: 'સ્ટાફ / ડ્રાઇવર',
         descriptionEn: 'Comfortable rest & refreshment arrangements near the venue',
         descriptionGu: 'ડ્રાઇવર અને સ્ટાફ માટે સ્થળ નજીક વિશ્રામ અને ભોજન વ્યવસ્થા છે',
+        icon: iconStaff,
       },
       {
         id: 'parking',
         titleEn: 'Parking',
         titleGu: 'પાર્કિંગ',
-        descriptionEn: 'Spacious parking available at the venue for all guests',
+        descriptionEn: 'Valet & spacious parking available at the venue',
         descriptionGu: 'મહેમાનો માટે પ્રસંગ સ્થળે પાર્કિંગની પૂરતી સુવિધા ઉપલબ્ધ છે',
+        icon: iconParking,
       },
     ] as ThingToKnowItem[],
   },

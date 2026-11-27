@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLanguage } from '@/context/LanguageContext';
 import weddingData from '@/data/wedding';
-import {
-  SunburstDividerSvg,
-  FourPointStarSvg,
-} from '@/components/svg/TempleOrnaments';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface TimeLeft {
   days: number;
@@ -16,10 +16,38 @@ interface TimeLeft {
 
 const CountdownSection: React.FC = () => {
   const { t, lang } = useLanguage();
+  const pondRef = useRef<HTMLDivElement>(null);
   const targetTimestamp = useMemo(
     () => new Date(weddingData.countdown.targetIsoIST).getTime(),
     []
   );
+
+  // Smooth depth parallax on Royal Temple Lotus Pond & Elephant backdrop
+  useEffect(() => {
+    if (!pondRef.current) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        pondRef.current,
+        { y: 20, scale: 1.03 },
+        {
+          y: 0,
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: pondRef.current,
+            start: 'top bottom',
+            end: 'bottom bottom',
+            scrub: 1.1,
+          },
+        }
+      );
+    }, pondRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
@@ -65,89 +93,166 @@ const CountdownSection: React.FC = () => {
   return (
     <section
       id="countdown"
-      className="relative w-full bg-[#FFF4EA] pt-6 sm:pt-10 pb-8 px-4 text-center overflow-hidden"
+      className="relative w-full max-w-[1515px] mx-auto bg-[#FFEFE2] overflow-hidden text-center"
     >
-      {/* Downward Golden Sunburst Divider */}
-      <SunburstDividerSvg className="w-48 sm:w-64 h-12 mx-auto mb-6" direction="down" />
-
-      {/* Heading + Subtitle + Star Divider */}
-      <motion.div
-        initial={{ opacity: 0, y: 36, scale: 0.94 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="max-w-[540px] mx-auto"
-      >
-        <h2
-          className={`text-[#5F250F] leading-tight ${
-            lang === 'gu'
-              ? 'font-gujarati font-bold text-2xl sm:text-4xl lg:text-[48px]'
-              : 'font-display font-medium text-[26px] sm:text-4xl lg:text-[54px]'
-          }`}
-        >
-          {t(weddingData.countdown.headingGu, weddingData.countdown.headingEn)}
-        </h2>
-        <p
-          className={`mt-2.5 text-xs sm:text-sm text-[#5F250F]/80 leading-relaxed max-w-[440px] mx-auto ${
-            lang === 'gu' ? 'font-gujarati' : 'font-sans'
-          }`}
-        >
-          {t(weddingData.countdown.subtextGu, weddingData.countdown.subtextEn)}
-        </p>
-
-        {/* Gold Star Divider */}
-        <div className="flex items-center justify-center gap-3 w-40 mx-auto mt-5">
-          <div className="h-[1px] flex-1 bg-[#DDA45D]/70" />
-          <FourPointStarSvg className="w-3 h-3" />
-          <div className="h-[1px] flex-1 bg-[#DDA45D]/70" />
+      {/* Upper Countdown Text & Timer with Gold Architectural Side Rails */}
+      <div className="max-w-[1260px] mx-auto border-x border-[#DDA45D]/45 px-4 pt-6 sm:pt-12 pb-6 sm:pb-10">
+        {/* Top Framer Sunburst Ornament */}
+        <div className="flex justify-center mb-5 sm:mb-8 pointer-events-none select-none">
+          <img
+            src={weddingData.framer.ornamentMobile}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="md:hidden w-[250px] h-auto"
+          />
+          <img
+            src={weddingData.framer.ornamentWide}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="hidden md:block w-[480px] h-auto"
+          />
         </div>
-      </motion.div>
 
-      {/* Open Floating Gold Numerals (#DDA45D) with Blur-Flip Transition */}
-      <motion.div
-        initial={{ opacity: 0, y: 32, scale: 0.92 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8, delay: 0.1 }}
-        className="mt-7"
-      >
-        {completed ? (
-          <p className="font-gujarati text-2xl sm:text-4xl font-bold text-[#AB5626]">
-            {weddingData.countdown.completedText}
+        {/* Heading + Intro Paragraph + Star Divider */}
+        <motion.div
+          initial={{ opacity: 0, y: 36, scale: 0.95, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-[780px] mx-auto"
+        >
+          <h2
+            className={`text-[#5F250F] leading-[1.06] ${
+              lang === 'gu'
+                ? 'font-gujarati font-bold text-2xl sm:text-5xl lg:text-[64px]'
+                : 'font-ivyora font-medium text-[24px] sm:text-6xl lg:text-[86px]'
+            }`}
+          >
+            {t(weddingData.countdown.headingGu, weddingData.countdown.headingEn)}
+          </h2>
+
+          <p
+            className={`mt-3 sm:mt-5 text-[11px] sm:text-lg lg:text-[26px] text-[#5F250F] leading-[1.45] max-w-[680px] mx-auto ${
+              lang === 'gu' ? 'font-gujarati' : 'font-ivyora font-normal'
+            }`}
+          >
+            {t(weddingData.countdown.subtextGu, weddingData.countdown.subtextEn)}
           </p>
-        ) : (
-          <div className="flex justify-center items-center gap-6 sm:gap-10">
-            {units.map((u) => {
-              const formatted = String(u.value).padStart(2, '0');
-              return (
-                <div key={u.key} className="flex flex-col items-center">
-                  <div className="relative h-11 sm:h-14 flex items-center justify-center overflow-hidden">
-                    <AnimatePresence mode="popLayout">
-                      <motion.span
-                        key={formatted}
-                        initial={{ opacity: 0, y: 10, filter: 'blur(3px)' }}
-                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                        exit={{ opacity: 0, y: -10, filter: 'blur(3px)' }}
-                        transition={{ duration: 0.35 }}
-                        className="font-sans font-bold text-[34px] sm:text-[44px] lg:text-[52px] text-[#DDA45D] leading-none tabular-nums"
-                      >
-                        {formatted}
-                      </motion.span>
-                    </AnimatePresence>
-                  </div>
-                  <span
-                    className={`mt-1.5 text-[9px] sm:text-[10px] tracking-[0.12em] uppercase font-semibold text-[#888888] ${
-                      lang === 'gu' ? 'font-gujarati' : 'font-sans'
-                    }`}
-                  >
-                    {lang === 'gu' ? u.labelGu : u.labelEn}
-                  </span>
-                </div>
-              );
-            })}
+
+          {/* Exact Framer 4-Point Star Golden Line Divider */}
+          <div className="flex justify-center mt-5 sm:mt-7 pointer-events-none select-none">
+            <img
+              src={weddingData.framer.starDividerMobile}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="md:hidden w-[180px] h-auto"
+            />
+            <img
+              src={weddingData.framer.starDividerWide}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="hidden md:block w-[560px] h-auto"
+            />
           </div>
-        )}
-      </motion.div>
+        </motion.div>
+
+        {/* Framer Countdown Numerals (#DDA45D Bold Inter, Blur-Flip Digit Animation) */}
+        <motion.div
+          initial={{ opacity: 0, y: 32, scale: 0.92 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="mt-7 sm:mt-10"
+        >
+          {completed ? (
+            <p className="font-gujarati text-2xl sm:text-4xl font-bold text-[#AB5626]">
+              {weddingData.countdown.completedText}
+            </p>
+          ) : (
+            <div className="flex justify-center items-center gap-6 sm:gap-12 lg:gap-16">
+              {units.map((u) => {
+                const formatted = String(u.value).padStart(2, '0');
+                return (
+                  <div key={u.key} className="flex flex-col items-center">
+                    <div className="relative h-11 sm:h-16 lg:h-20 flex items-center justify-center overflow-hidden">
+                      <AnimatePresence mode="popLayout">
+                        <motion.span
+                          key={formatted}
+                          initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
+                          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                          exit={{ opacity: 0, y: -12, filter: 'blur(3px)' }}
+                          transition={{ duration: 0.35 }}
+                          style={{ fontFamily: '"Inter", sans-serif' }}
+                          className="font-bold text-[36px] sm:text-[54px] lg:text-[72px] text-[#DDA45D] leading-none tabular-nums"
+                        >
+                          {formatted}
+                        </motion.span>
+                      </AnimatePresence>
+                    </div>
+                    <span
+                      style={{ fontFamily: lang === 'gu' ? undefined : '"Inter", sans-serif' }}
+                      className={`mt-1.5 text-[9px] sm:text-[12px] lg:text-[14px] tracking-[0.12em] uppercase font-semibold text-[#888888] ${
+                        lang === 'gu' ? 'font-gujarati' : ''
+                      }`}
+                    >
+                      {lang === 'gu' ? u.labelGu : u.labelEn}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </motion.div>
+
+        {/* Bottom Flipped Framer Sunburst Ornament */}
+        <div className="flex justify-center mt-7 sm:mt-10 pointer-events-none select-none rotate-180">
+          <img
+            src={weddingData.framer.ornamentMobile}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="md:hidden w-[250px] h-auto"
+          />
+          <img
+            src={weddingData.framer.ornamentWide}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="hidden md:block w-[480px] h-auto"
+          />
+        </div>
+      </div>
+
+      {/* Royal Temple Lotus Pond & Elephant Sunset Scene (Framers Countdown Backdrop) */}
+      <div
+        ref={pondRef}
+        className="relative w-full -mt-4 sm:-mt-10 lg:-mt-16 pointer-events-none select-none will-change-transform"
+      >
+        <img
+          src={weddingData.framer.countdownBackdropMobile}
+          alt="Royal Temple Lotus Pond and Elephant"
+          loading="lazy"
+          className="md:hidden w-full h-auto block"
+          style={{
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 100%)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 100%)',
+          }}
+        />
+        <img
+          src={weddingData.framer.countdownBackdropDesktop}
+          alt="Royal Temple Lotus Pond and Elephant"
+          loading="lazy"
+          className="hidden md:block w-full h-auto block"
+          style={{
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 100%)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 12%, black 100%)',
+          }}
+        />
+      </div>
     </section>
   );
 };

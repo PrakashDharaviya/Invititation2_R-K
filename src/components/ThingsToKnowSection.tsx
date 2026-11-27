@@ -2,10 +2,6 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { useLanguage } from '@/context/LanguageContext';
 import weddingData from '@/data/wedding';
-import {
-  SunburstDividerSvg,
-  ThingsBadgeIconSvg,
-} from '@/components/svg/TempleOrnaments';
 
 const ThingsToKnowSection: React.FC = () => {
   const { t, lang } = useLanguage();
@@ -14,73 +10,109 @@ const ThingsToKnowSection: React.FC = () => {
   return (
     <section
       id="things-to-know"
-      className="relative w-full bg-[#FFF4EA] py-8 sm:py-12 px-2 sm:px-6 text-center overflow-hidden"
+      className="relative w-full max-w-[1515px] mx-auto bg-[#FFEFE2] py-6 sm:py-10 px-3 sm:px-8 overflow-hidden"
     >
-      {/* Top Upward Sunburst Divider */}
-      <SunburstDividerSvg className="w-48 sm:w-64 h-12 mx-auto mb-3" direction="up" />
+      <div className="max-w-[1260px] mx-auto border-x border-[#DDA45D]/45 px-2 sm:px-8 lg:px-12 py-6 sm:py-10 text-center">
+        {/* Top Framer Sunburst Ornament Divider */}
+        <div className="flex justify-center mb-4 sm:mb-7 pointer-events-none select-none">
+          <img
+            src={weddingData.framer.ornamentMobile}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="md:hidden w-[250px] h-auto"
+          />
+          <img
+            src={weddingData.framer.ornamentWide}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="hidden md:block w-[480px] h-auto"
+          />
+        </div>
 
-      {/* Heading + Subtitle */}
-      <motion.div
-        initial={{ opacity: 0, y: 36, scale: 0.96 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: 0.75, ease: 'easeOut' }}
-        className="max-w-[680px] mx-auto px-3 mb-8 sm:mb-10"
-      >
-        <h2
-          className={`text-[#5F250F] leading-tight ${
-            lang === 'gu'
-              ? 'font-gujarati font-bold text-3xl sm:text-5xl lg:text-[56px]'
-              : 'font-display font-medium text-[31px] sm:text-5xl lg:text-[60px]'
-          }`}
+        {/* Heading + Subtext */}
+        <motion.div
+          initial={{ opacity: 0, y: 36, scale: 0.96, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-[820px] mx-auto px-3 mb-7 sm:mb-10"
         >
-          {t(weddingData.thingsToKnow.headingGu, weddingData.thingsToKnow.headingEn)}
-        </h2>
-        <p
-          className={`mt-2.5 text-xs sm:text-sm lg:text-base text-[#5F250F]/80 leading-relaxed ${
-            lang === 'gu' ? 'font-gujarati' : 'font-sans'
-          }`}
-        >
-          {t(weddingData.thingsToKnow.subtextGu, weddingData.thingsToKnow.subtextEn)}
-        </p>
-      </motion.div>
-
-      {/* 4 Columns Side-by-Side in 1 Horizontal Row (on BOTH Desktop AND 393px Poco M4 Pro) */}
-      <motion.div
-        initial={{ opacity: 0, y: 36, scale: 0.96 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-[1040px] mx-auto grid grid-cols-4 divide-x divide-[#DDA45D]/55"
-      >
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="flex flex-col items-center text-center px-1 sm:px-5 py-2 min-w-0"
+          <h2
+            className={`text-[#5F250F] leading-tight ${
+              lang === 'gu'
+                ? 'font-gujarati font-bold text-[30px] sm:text-5xl lg:text-[56px]'
+                : 'font-ivyora font-medium text-[31px] sm:text-5xl lg:text-[60px]'
+            }`}
           >
-            {/* Circular Dark Burnt-Umber Icon Badge (#5F250F) */}
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#5F250F] flex items-center justify-center shadow-sm mb-2 sm:mb-3.5">
-              <ThingsBadgeIconSvg id={item.id} />
-            </div>
+            {t(weddingData.thingsToKnow.headingGu, weddingData.thingsToKnow.headingEn)}
+          </h2>
+          <p
+            className={`mt-2.5 text-[11px] sm:text-base lg:text-[20px] text-[#5F250F] leading-[1.6] ${
+              lang === 'gu' ? 'font-gujarati' : 'font-gotham tracking-[-0.02em]'
+            }`}
+          >
+            {t(weddingData.thingsToKnow.subtextGu, weddingData.thingsToKnow.subtextEn)}
+          </p>
+        </motion.div>
 
-            <h3
-              className={`text-[11px] sm:text-base lg:text-lg font-bold text-[#5F250F] leading-snug break-words w-full ${
-                lang === 'gu' ? 'font-gujarati' : 'font-display'
-              }`}
+        {/* 4 Info Columns Row — Original Circular Framer Icons + #DDA45D Vertical Dividers */}
+        <div className="max-w-[1040px] mx-auto grid grid-cols-4 divide-x-[1.5px] sm:divide-x-[3px] divide-[#DDA45D]">
+          {items.map((item, idx) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 28, scale: 0.95, filter: 'blur(4px)' }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.75, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className="flex flex-col items-center text-center px-1 sm:px-4 py-2 min-w-0"
             >
-              {t(item.titleGu, item.titleEn)}
-            </h3>
+              <img
+                src={item.icon}
+                alt={t(item.titleGu, item.titleEn)}
+                loading="lazy"
+                className="w-10 h-10 sm:w-16 sm:h-16 lg:w-[88px] lg:h-[88px] object-contain mb-2 sm:mb-3 select-none"
+              />
 
-            <p
-              className={`mt-1 text-[9px] sm:text-xs lg:text-[13px] text-[#5F250F]/75 leading-[1.35] max-w-[190px] break-words w-full ${
-                lang === 'gu' ? 'font-gujarati' : 'font-sans'
-              }`}
-            >
-              {t(item.descriptionGu, item.descriptionEn)}
-            </p>
-          </div>
-        ))}
-      </motion.div>
+              <h3
+                className={`text-[12px] sm:text-[20px] lg:text-[26px] font-medium text-[#5F250F] leading-snug break-words w-full ${
+                  lang === 'gu' ? 'font-gujarati font-bold' : 'font-ivyora'
+                }`}
+              >
+                {t(item.titleGu, item.titleEn)}
+              </h3>
+
+              <p
+                className={`mt-1 text-[8.5px] sm:text-[12px] lg:text-[13px] text-[#5F250F]/85 leading-[1.35] max-w-[200px] break-words w-full ${
+                  lang === 'gu' ? 'font-gujarati' : 'font-ivyora'
+                }`}
+              >
+                {t(item.descriptionGu, item.descriptionEn)}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Bottom Flipped Framer Sunburst Ornament Divider */}
+        <div className="flex justify-center mt-6 sm:mt-10 pointer-events-none select-none rotate-180">
+          <img
+            src={weddingData.framer.ornamentMobile}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="md:hidden w-[250px] h-auto"
+          />
+          <img
+            src={weddingData.framer.ornamentWide}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="hidden md:block w-[480px] h-auto"
+          />
+        </div>
+      </div>
     </section>
   );
 };

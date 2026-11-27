@@ -7,14 +7,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Reference display serifs ("Miofarin" / "IvyOra Display" matches)
-        display: ['"Cormorant Garamond"', '"Alike Angular"', '"Alegreya"', 'serif'],
-        // Reference flared serif for couple hero names
-        heroName: ['"Alike Angular"', '"Cormorant Garamond"', 'serif'],
-        // Reference signature script ("Brother Signature" match)
-        script: ['"Alex Brush"', '"Great Vibes"', 'cursive'],
-        // Reference clean sans ("Gotham" / "Inter" match)
-        sans: ['"DM Sans"', '"Inter"', 'sans-serif'],
+        // Exact Framer template custom fonts (bundled from Rajnesh_Kinjal_Updated.zip)
+        miofarin: ['"Miofarin Regular"', '"Alike Angular"', 'serif'],
+        signature: ['"Brother Signature Regular"', '"Alex Brush"', 'cursive'],
+        ivyora: ['"IvyOra Display"', 'serif'],
+        gotham: ['"Gotham"', '"Inter"', 'sans-serif'],
+        // Aliases kept compatible
+        display: ['"IvyOra Display"', 'serif'],
+        heroName: ['"Miofarin Regular"', 'serif'],
+        script: ['"Brother Signature Regular"', 'cursive'],
+        sans: ['"Gotham"', '"Inter"', 'sans-serif'],
         // Gujarati Unicode fonts
         gujarati: ['"Noto Serif Gujarati"', 'serif'],
         gujaratiSans: ['"Hind Vadodara"', 'sans-serif'],
@@ -22,4 +24,4 @@ export default {
     },
   },
   plugins: [],
-}
+};
