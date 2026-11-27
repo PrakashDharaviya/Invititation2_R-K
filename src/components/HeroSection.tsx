@@ -9,7 +9,7 @@ import InvitationSection from '@/components/InvitationSection';
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Saffron waving temple pennant flag drawn smoothly on canvas (matching Framer's Waving Flag)
+ * Saffron swallowtail waving temple banner with golden border & "जय श्री राम" silk cloth ripple shader
  */
 const WavingFlagCanvas: React.FC<{ className?: string }> = ({ className = '' }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -21,70 +21,171 @@ const WavingFlagCanvas: React.FC<{ className?: string }> = ({ className = '' }) 
     if (!ctx) return;
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const TEX_W = 520;
+    const TEX_H = 340;
+    const FLAG_TOP = 24;
+    const FLAG_BOT = 316;
+    const NOTCH_X = 392;
+    const MID_Y = (FLAG_TOP + FLAG_BOT) / 2;
+
+    const offscreen = document.createElement('canvas');
+    offscreen.width = TEX_W;
+    offscreen.height = TEX_H;
+    const octx = offscreen.getContext('2d');
+    if (!octx) return;
+
+    const drawBannerTexture = () => {
+      octx.clearRect(0, 0, TEX_W, TEX_H);
+
+      const traceSwallowtail = (inset = 0) => {
+        const top = FLAG_TOP + inset;
+        const bot = FLAG_BOT - inset;
+        const right = TEX_W - 14 - inset * 1.4;
+        const notch = NOTCH_X - inset * 1.1;
+        octx.beginPath();
+        octx.moveTo(0, top);
+        octx.lineTo(right, top);
+        octx.lineTo(notch, MID_Y);
+        octx.lineTo(right, bot);
+        octx.lineTo(0, bot);
+        octx.closePath();
+      };
+
+      // Glowing saffron-vermilion silk fill
+      const silkGrad = octx.createLinearGradient(0, FLAG_TOP, TEX_W, FLAG_BOT);
+      silkGrad.addColorStop(0, '#F35B0E');
+      silkGrad.addColorStop(0.42, '#E23E04');
+      silkGrad.addColorStop(0.78, '#CD2B02');
+      silkGrad.addColorStop(1, '#AE1D00');
+      traceSwallowtail(0);
+      octx.fillStyle = silkGrad;
+      octx.fill();
+
+      // Subtle diagonal weave depth inside cloth
+      const sheenGrad = octx.createLinearGradient(0, FLAG_TOP, TEX_W * 0.8, FLAG_BOT);
+      sheenGrad.addColorStop(0, 'rgba(255, 210, 120, 0.16)');
+      sheenGrad.addColorStop(0.5, 'rgba(255, 160, 40, 0.04)');
+      sheenGrad.addColorStop(1, 'rgba(90, 10, 0, 0.2)');
+      octx.fillStyle = sheenGrad;
+      octx.fill();
+
+      // Double gold zari border trim along top, bottom, and swallowtail V-cut
+      octx.strokeStyle = '#E8B239';
+      octx.lineWidth = 6;
+      traceSwallowtail(3);
+      octx.stroke();
+
+      octx.strokeStyle = '#FBE28A';
+      octx.lineWidth = 2.2;
+      traceSwallowtail(9);
+      octx.stroke();
+
+      // Sacred gold metallic lettering gradient
+      const goldGrad = octx.createLinearGradient(60, 80, 320, 265);
+      goldGrad.addColorStop(0, '#FFF1AA');
+      goldGrad.addColorStop(0.45, '#F5C851');
+      goldGrad.addColorStop(1, '#D38B1B');
+
+      octx.textAlign = 'center';
+      octx.textBaseline = 'middle';
+      octx.shadowColor = 'rgba(92, 16, 0, 0.45)';
+      octx.shadowBlur = 4;
+      octx.shadowOffsetX = 1.5;
+      octx.shadowOffsetY = 2;
+
+      // Top line: "जय श्री"
+      octx.font = '700 54px "Noto Serif Devanagari", "Kokila", "Mangal", serif';
+      octx.fillStyle = goldGrad;
+      octx.fillText('जय श्री', 200, 122);
+
+      // Bold lower line: "राम" + curved devotional flourish beneath
+      octx.font = '700 102px "Noto Serif Devanagari", "Kokila", "Mangal", serif';
+      octx.fillText('राम', 202, 216);
+
+      // Decorative gold calligraphic tail sweep under "राम"
+      octx.shadowBlur = 2;
+      octx.strokeStyle = goldGrad;
+      octx.lineWidth = 9;
+      octx.lineCap = 'round';
+      octx.beginPath();
+      octx.moveTo(156, 250);
+      octx.quadraticCurveTo(214, 286, 294, 266);
+      octx.stroke();
+      octx.shadowColor = 'transparent';
+    };
+
+    drawBannerTexture();
+    let active = true;
+    document.fonts?.ready.then(() => {
+      if (active) drawBannerTexture();
+    });
+
     let rafId = 0;
-    let t = 0;
+    let lastTs = performance.now();
+    let elapsed = 0.8;
 
-    const draw = () => {
-      const w = canvas.width;
-      const h = canvas.height;
-      ctx.clearRect(0, 0, w, h);
+    const renderWave = (now: number) => {
+      const dt = Math.min((now - lastTs) / 1000, 0.05);
+      lastTs = now;
+      if (!prefersReduced) elapsed += dt;
 
-      // Pole
-      ctx.strokeStyle = '#AB5626';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      ctx.moveTo(w * 0.12, h * 0.1);
-      ctx.lineTo(w * 0.12, h * 0.96);
-      ctx.stroke();
+      const W = canvas.width;
+      const H = canvas.height;
+      ctx.clearRect(0, 0, W, H);
 
-      // Waving saffron triangle flag
-      const startX = w * 0.13;
-      const flagLen = w * 0.72;
-      const topY = h * 0.14;
-      const baseH = h * 0.42;
+      const scaleX = W / TEX_W;
+      const scaleY = H / TEX_H;
+      const padTop = 18;
+      const drawScaleY = (H - padTop * 2) / TEX_H;
+      const stripStep = 2;
 
-      const grad = ctx.createLinearGradient(startX, topY, startX + flagLen, topY + baseH);
-      grad.addColorStop(0, '#E86C24');
-      grad.addColorStop(0.55, '#D95414');
-      grad.addColorStop(1, '#B83D08');
+      for (let sx = 0; sx < TEX_W; sx += stripStep) {
+        const p = sx / TEX_W;
+        const amp = Math.pow(p, 1.15) * 20;
+        const primary = Math.sin(p * 6.4 - elapsed * 3.5);
+        const harmonic = Math.sin(p * 11.2 - elapsed * 5.2 + 0.85) * 0.36;
+        const dy = (primary + harmonic) * amp;
 
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.moveTo(startX, topY);
+        // Perspective ripple compression + silk highlight/shadow from surface slope
+        const slope = Math.cos(p * 6.4 - elapsed * 3.5) * (0.65 + p * 0.5);
+        const destX = sx * scaleX;
+        const destW = Math.max(1.5, stripStep * scaleX * (1 - 0.045 * Math.abs(slope) * p)) + 0.6;
+        const destY = padTop + dy * scaleY;
+        const destH = TEX_H * drawScaleY;
 
-      const steps = 20;
-      for (let i = 1; i <= steps; i++) {
-        const p = i / steps;
-        const x = startX + p * flagLen;
-        const wave = Math.sin(p * 4.5 - t) * (3.2 * p);
-        const y = topY + p * (baseH * 0.5) + wave;
-        ctx.lineTo(x, y);
+        ctx.drawImage(offscreen, sx, 0, stripStep, TEX_H, destX, destY, destW, destH);
+
+        // Realistic fabric specular highlights & fold shadows locked inside flag shape
+        if (Math.abs(slope) > 0.06) {
+          ctx.save();
+          ctx.globalCompositeOperation = 'source-atop';
+          if (slope > 0) {
+            ctx.fillStyle = `rgba(255, 224, 136, ${(slope * 0.24 * Math.min(1, p * 2.2)).toFixed(3)})`;
+          } else {
+            ctx.fillStyle = `rgba(82, 10, 0, ${(-slope * 0.28 * Math.min(1, p * 2.2)).toFixed(3)})`;
+          }
+          ctx.fillRect(destX, destY, destW, destH);
+          ctx.restore();
+        }
       }
-      for (let i = steps; i >= 0; i--) {
-        const p = i / steps;
-        const x = startX + p * flagLen;
-        const wave = Math.sin(p * 4.5 - t) * (3.2 * p);
-        const y = topY + baseH - p * (baseH * 0.5) + wave;
-        ctx.lineTo(x, y);
-      }
-      ctx.closePath();
-      ctx.fill();
 
       if (!prefersReduced) {
-        t += 0.08;
-        rafId = requestAnimationFrame(draw);
+        rafId = requestAnimationFrame(renderWave);
       }
     };
 
-    draw();
-    return () => cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(renderWave);
+    return () => {
+      active = false;
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      width={120}
-      height={80}
+      width={360}
+      height={240}
       aria-hidden="true"
       className={className}
     />
@@ -399,7 +500,7 @@ const HeroSection: React.FC = () => {
       {/* ==================== SKY PARALLAX BACKDROP ==================== */}
       <div className="relative w-full max-w-[1515px] mx-auto overflow-x-clip">
         {/* Background Sky Layer */}
-        <div className="relative w-full h-[505px] min-[375px]:h-[570px] min-[420px]:h-[615px] sm:h-[820px] lg:h-[1180px] bg-[#F7E8D4] pointer-events-none select-none overflow-hidden">
+        <div className="relative w-full h-[520px] min-[375px]:h-[590px] min-[420px]:h-[630px] sm:h-[820px] lg:h-[1180px] bg-[#F7E8D4] pointer-events-none select-none overflow-hidden">
           <img
             src={weddingData.framer.skyMobile}
             alt=""
@@ -617,21 +718,45 @@ const HeroSection: React.FC = () => {
           ref={templeWrapRef}
           className="relative z-20 w-full -mt-[215px] min-[375px]:-mt-[245px] min-[420px]:-mt-[265px] sm:-mt-[410px] lg:-mt-[620px]"
         >
-          {/* Saffron Waving Flag anchored to exact temple peak kalash (x ~ 49.8%) */}
-          <div className="absolute left-[49.3%] -top-[34px] sm:-top-[56px] lg:-top-[78px] z-20 pointer-events-none">
-            <WavingFlagCanvas className="w-[52px] sm:w-[86px] lg:w-[116px] h-auto opacity-90" />
+          {/* Brass Temple Spire + Animated "जय श्री राम" Saffron Flag mounted cleanly on dome kalash peak */}
+          <div className="absolute left-[49.85%] -translate-x-1/2 -top-[68px] sm:-top-[96px] lg:-top-[122px] z-20 pointer-events-none select-none">
+            <div className="relative w-[16px] sm:w-[22px] lg:w-[28px]">
+              {/* Animated swallowtail banner wrapped directly onto shaft below spire spearhead */}
+              <div className="absolute left-[42%] top-[23%] w-[56px] sm:w-[82px] lg:w-[112px] aspect-[3/2] z-10">
+                <WavingFlagCanvas className="w-full h-full block" />
+              </div>
+
+              <img
+                src={weddingData.framer.spireMobile}
+                alt=""
+                aria-hidden="true"
+                className="md:hidden relative z-20 w-full h-auto block"
+              />
+              <img
+                src={weddingData.framer.spireDesktop}
+                alt=""
+                aria-hidden="true"
+                className="hidden md:block relative z-20 w-full h-auto block"
+              />
+            </div>
           </div>
 
-          {/* Original Framer Temple Scene (Mobile & Desktop variants with soft bottom alpha feather into chhatri sky) */}
-          <img
-            src={weddingData.framer.templeMobile}
-            alt="Temple Wedding Entrance"
-            className="md:hidden w-full h-auto block select-none"
+          {/* Mobile Temple Scene clipped neatly to fit doorway content cleanly (no extra blank bottom tail) */}
+          <div
+            className="md:hidden w-full aspect-[876/2520] overflow-hidden"
             style={{
               WebkitMaskImage: 'linear-gradient(to bottom, black 90%, transparent 100%)',
               maskImage: 'linear-gradient(to bottom, black 90%, transparent 100%)',
             }}
-          />
+          >
+            <img
+              src={weddingData.framer.templeMobile}
+              alt="Temple Wedding Entrance"
+              className="w-full h-full object-cover object-top block select-none"
+            />
+          </div>
+
+          {/* Original Desktop Temple Scene with soft bottom alpha feather into chhatri sky */}
           <img
             src={weddingData.framer.templeDesktop}
             alt="Temple Wedding Entrance"
